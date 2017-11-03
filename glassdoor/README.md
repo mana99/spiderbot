@@ -7,5 +7,8 @@
 In scrapy folder:
 
 ``` bash
-scrapy crawl company -a city="rotterdam" -o "rotterdam.json"   # Company crawler
+# Company crawler
+scrapy crawl company -a city="rotterdam" \
+                     -a url="https://www.glassdoor.com/Reviews/rotterdam-reviews-SRCH_IL.0,9_IM1109.htm" \
+                     -o "rotterdam.json"   
 ```

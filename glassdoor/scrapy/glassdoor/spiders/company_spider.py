@@ -7,9 +7,11 @@ class companySpider(scrapy.Spider):
     name = "company"
     allowed_domains = ["glassdoor.com"]
 
-    def __init__(self, city='', *args, **kwargs):
+    def __init__(self, city='', url='', *args, **kwargs):
         super(companySpider, self).__init__(*args, **kwargs)
-        self.start_urls = ["https://www.glassdoor.com/Reviews/%s-reviews-SRCH_IL.0,9_IM1112.htm" % city]
+
+        #self.start_urls = ["https://www.glassdoor.com/Reviews/%s-reviews-SRCH_IL.0,9_IM1112.htm" % city.replace(' ', '-')]
+        self.start_urls = [ url ]
         self.city = city
 
 
@@ -31,7 +33,7 @@ class companySpider(scrapy.Spider):
     def parseCompany(self, response):
         item = CompanyItem()
         item['name'] = response.xpath('//*[@id="EmpHeroAndEmpInfo"]/div[3]/div[2]/h1/text()').extract_first()
-        item['city'] = self.city.capitalize()
+        item['city'] = self.city
         item['website'] = response.xpath('//*[@id="EmpBasicInfo"]/div[1]/div/div[label="Website"]/span/a/text()').extract_first()
         item['size'] = response.xpath('//*[@id="EmpBasicInfo"]/div[1]/div/div[label="Size"]/span/text()').extract_first()
         item['company_type'] = response.xpath('//*[@id="EmpBasicInfo"]/div[1]/div/div[label="Type"]/span/text()').extract_first()
